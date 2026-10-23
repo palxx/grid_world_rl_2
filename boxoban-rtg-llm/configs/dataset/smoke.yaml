@@ -1,0 +1,14 @@
+# Stage 1 smoke test: 4 levels x 5 episodes = 20 episodes, CPU only, a few seconds.
+name: smoke
+output_dir: data/trajectories/smoke
+seed: 0
+max_steps: 120
+workers: 1
+levels: {difficulty: unfiltered, split: train, n: 4, sampling_seed: 0}
+policies:
+  - {id: solver, name: solver, per_level: 1}
+  - {id: inefficient_solver, name: inefficient_solver, per_level: 2}
+  - {id: stochastic_solver, name: stochastic_solver, params: {deviation_prob: 0.1}, per_level: 1}
+  - {id: random, name: random, per_level: 1}
+quality_limits:
+  inefficient_solver: {repeated_state_frac: 0.3, reversal_frac: 0.15}

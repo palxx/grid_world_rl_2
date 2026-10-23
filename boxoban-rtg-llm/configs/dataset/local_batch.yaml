@@ -1,0 +1,14 @@
+# Small CPU-only validation batch (not the pilot): 40 levels, no DRC / A*-CSV sources (those need the Dell).
+name: local_batch
+output_dir: data/trajectories/local_batch
+seed: 0
+max_steps: 120
+workers: 4
+levels: {difficulty: unfiltered, split: train, n: 40, sampling_seed: 7}
+policies:
+  - {id: solver, name: solver, per_level: 1}
+  - {id: inefficient_solver, name: inefficient_solver, per_level: 3}
+  - {id: stochastic_solver, name: stochastic_solver, params: {deviation_prob: 0.1}, per_level: 2}
+  - {id: random, name: random, per_level: 1}
+quality_limits:
+  inefficient_solver: {repeated_state_frac: 0.3, reversal_frac: 0.15}
